@@ -2,29 +2,95 @@
 
 // Definição de variaveis
 const semaforo = document.getElementById('semaforo');
-const vermelho = document.getElementById('vermelho');
-const amarelo = document.getElementById('amarelo');
-const verde = document.getElementById('verde');
+const semVerde = document.getElementById('verde');
+const semVermelho = document.getElementById('vermelho');
+const semAmarelo = document.getElementById('amarelo');
+const semAuto = document.getElementById('automatico');
+let idPiscar = null;
 
-const mudarVermelho = () => {
-    semaforo.src = './img/vermelho.png';
-    
-}
-    
-const mudarAmarelo = () => {
-    semaforo.src = './img/amarelo.png';
-   
-}
-    
-const mudarVerde = () => {
+// Funções que alteram a cor do semafaro
+const ligarVerde = () => {
     semaforo.src = './img/verde.png';
-   
-
+    semaforoStop();
+    autoTexto();
 }
-    
 
+const ligarAmarelo = () => {
+    semaforo.src = './img/amarelo.png';
+    semaforoStop();
+    autoTexto();
+}
 
-vermelho.addEventListener('click', mudarVermelho);
-amarelo.addEventListener('click', mudarAmarelo);
-verde.addEventListener('click', mudarVerde);
+const ligarVermelho = () => {
+    semaforo.src = './img/vermelho.png';
+    semaforoStop();
+    autoTexto();
+}
+
+const desligar = () => {
+    semaforo.src = './img/desligado.png';
+    semaforoStop();
+    autoTexto();
+}
+
+// Verificação de cor do semafaro
+const recebeVerde = () => {
+    return semafaro.src.includes('verde');
+}
+
+const recebeAmarelo = () => {
+    return semafaro.src.includes('amarelo');
+}
+
+const recebeVermellho = () => {
+    return semafaro.src.includes('vermelho');
+}
+
+const recebeDesligado = () => {
+    return semafaro.src.includes('desligado');
+}
+
+// Função para a troca de cores
+const trocarCorAuto = () => {
+    if(recebeDesligado) {
+        ligarVerde;
+    } else if (recebeVermellho) {
+        ligarVerde;
+    } else if (recebeVerde) {
+        ligarAmarelo;
+    } else {
+        ligarVermelho;
+    }
+}
+
+// Alterando texto botão auto
+const autoTexto = () => {
+    semAuto.textContent = 'Automático';
+}
+
+// Limpando o intervalo 
+const semaforoStop = () => {
+    clearInterval(idPiscar);
+}
+
+// Semaforo automatico
+const ligarAuto = () => {
+    if (semAuto.textContent == 'Automático') {
+        idPiscar = setInterval(trocarCorAuto, 1000);
+        semAuto.textContent = 'Parar';
+    } else {
+        semaforoStop();
+        desligar();
+        semAuto.textContent = 'Automático';
+    }
+}
+
+// Adicionando os eventos
+semVerde.addEventListener('click', ligarVerde);
+
+semAmarelo.addEventListener('click', ligarAmarelo);
+
+semVermelho.addEventListener('click', ligarVermelho);
+
+semAuto.addEventListener('click', ligarAuto);
 

@@ -6,13 +6,22 @@
 
 body{
     height: 100vh;
-    width: 100vw;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
+    gap: 5vh;
 }
 
-button {
-    width: 60px;
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5vh;
+}
+
+
+.botao {
+    width: 80px;
 }
