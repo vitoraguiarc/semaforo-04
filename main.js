@@ -11,26 +11,14 @@ let idPiscar = null;
 // Funções que alteram a cor do semafaro
 const ligarVerde = () => {
     semaforo.src = './img/verde.png';
-    semaforoStop();
-    autoTexto();
 }
 
 const ligarAmarelo = () => {
     semaforo.src = './img/amarelo.png';
-    semaforoStop();
-    autoTexto();
 }
 
 const ligarVermelho = () => {
     semaforo.src = './img/vermelho.png';
-    semaforoStop();
-    autoTexto();
-}
-
-const desligar = () => {
-    semaforo.src = './img/desligado.png';
-    semaforoStop();
-    autoTexto();
 }
 
 // Verificação de cor do semafaro
@@ -46,42 +34,28 @@ const recebeVermellho = () => {
     return semafaro.src.includes('vermelho');
 }
 
-const recebeDesligado = () => {
-    return semafaro.src.includes('desligado');
-}
-
 // Função para a troca de cores
 const trocarCorAuto = () => {
-    if(recebeDesligado) {
-        ligarVerde;
-    } else if (recebeVermellho) {
-        ligarVerde;
-    } else if (recebeVerde) {
-        ligarAmarelo;
+    if(recebeVerde()) {
+        ligarAmarelo();
+    } else if (recebeAmarelo()) {
+        ligarVermelho();
+    } else if (recebeVermellho()) {
+        ligarVerde();
     } else {
-        ligarVermelho;
+        ligarVerde();
     }
-}
-
-// Alterando texto botão auto
-const autoTexto = () => {
-    semAuto.textContent = 'Automático';
-}
-
-// Limpando o intervalo 
-const semaforoStop = () => {
-    clearInterval(idPiscar);
 }
 
 // Semaforo automatico
 const ligarAuto = () => {
-    if (semAuto.textContent == 'Automático') {
+    if (idPiscar == null) {
         idPiscar = setInterval(trocarCorAuto, 1000);
         semAuto.textContent = 'Parar';
     } else {
-        semaforoStop();
-        desligar();
-        semAuto.textContent = 'Automático';
+        clearInterval(idPiscar);
+        semAuto.textContent = 'Automatico';
+        idPiscar = null;
     }
 }
 
