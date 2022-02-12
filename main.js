@@ -8,6 +8,10 @@ const semAmarelo = document.getElementById('amarelo');
 const semAuto = document.getElementById('automatico');
 let idPiscar = null;
 
+//Verificar se o semafaro esta ligado
+const semaforoLigadoAuto = () => idPiscar != null;
+
+
 // Funções que alteram a cor do semafaro
 const ligarVerde = () => {
     semaforo.src = './img/verde.png';
@@ -23,15 +27,15 @@ const ligarVermelho = () => {
 
 // Verificação de cor do semafaro
 const recebeVerde = () => {
-    return semafaro.src.includes('verde');
+    return semaforo.src.includes('verde');
 }
 
 const recebeAmarelo = () => {
-    return semafaro.src.includes('amarelo');
+    return semaforo.src.includes('amarelo');
 }
 
 const recebeVermellho = () => {
-    return semafaro.src.includes('vermelho');
+    return semaforo.src.includes('vermelho');
 }
 
 // Função para a troca de cores
@@ -47,6 +51,12 @@ const trocarCorAuto = () => {
     }
 }
 
+// Limpar interval
+const limparInterval = () => {
+    clearInterval(idPiscar);
+    idPiscar = null;
+}
+
 // Semaforo automatico
 const ligarAuto = () => {
     if (idPiscar == null) {
@@ -60,11 +70,32 @@ const ligarAuto = () => {
 }
 
 // Adicionando os eventos
-semVerde.addEventListener('click', ligarVerde);
+semVerde.addEventListener('click', () => {
+    if (semaforoLigadoAuto) {
+        clearInterval(idPiscar)
+        idPiscar = null
+        semAuto.textContent = 'Automatico';
+    }
+    ligarVerde();
+});
 
-semAmarelo.addEventListener('click', ligarAmarelo);
+semAmarelo.addEventListener('click', () => {
+    if (semaforoLigadoAuto) {
+        clearInterval(idPiscar)
+        idPiscar = null
+        semAuto.textContent = 'Automatico';
+    }
+    ligarAmarelo();
+});
 
-semVermelho.addEventListener('click', ligarVermelho);
+semVermelho.addEventListener('click', () => {
+    if (semaforoLigadoAuto) {
+        clearInterval(idPiscar)
+        idPiscar = null
+        semAuto.textContent = 'Automatico';
+    }
+    ligarVermelho();
+});
 
 semAuto.addEventListener('click', ligarAuto);
 
